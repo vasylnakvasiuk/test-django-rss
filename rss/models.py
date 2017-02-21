@@ -2,6 +2,9 @@ from django.db import models
 
 
 class FeedSource(models.Model):
+    '''
+    Source model for RSS feeds.
+    '''
     url = models.URLField()
 
     def __str__(self):
@@ -9,6 +12,9 @@ class FeedSource(models.Model):
 
 
 class Feed(models.Model):
+    '''
+    Feed model.
+    '''
     feed_id = models.CharField(max_length=300)
     source = models.ForeignKey(FeedSource, related_name='feeds')
     title = models.CharField(max_length=30)

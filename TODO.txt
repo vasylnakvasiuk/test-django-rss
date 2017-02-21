@@ -1,3 +1,0 @@
-- Add RSS source from admin panel
-  - Add RSS runner for only one RSS source
-  - Add RSS source filter in news list
