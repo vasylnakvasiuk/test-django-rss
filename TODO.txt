@@ -1,8 +1,3 @@
-- Title validation
-  - at least 20 symbols
-  - use ModelForm or some other validation way
-- Django admin for news
-  - If news older than 1 day – highlight this item in red
 - Add RSS source from admin panel
   - Add RSS runner for only one RSS source
   - Add RSS source filter in news list

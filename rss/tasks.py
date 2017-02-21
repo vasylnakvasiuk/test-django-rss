@@ -4,23 +4,38 @@ import logging
 import feedparser
 from dateutil.parser import parse
 from celery import shared_task
+from django.core.exceptions import ValidationError
 
 from .models import Feed, FeedSource
 
 
 def _save_feeds(raw_feed, feed_source):
 
-    _, created = Feed.objects.get_or_create(
+    get_params = dict(
         feed_id=raw_feed['id'],
-        source=feed_source,
-        defaults=dict(
-            title=raw_feed['title'],
-            author=raw_feed['author'],
-            summary=raw_feed['summary'],
-            published_date=parse(raw_feed['published'])
-        )
+        source=feed_source
+    )
+    update_params = dict(
+        title=raw_feed['title'],
+        author=raw_feed['author'],
+        summary=raw_feed['summary'],
+        published_date=parse(raw_feed['published'])
     )
 
+    created = False
+    try:
+        feed = Feed.objects.get(**get_params)
+    except Feed.DoesNotExist:
+        feed = Feed(**get_params, **update_params)
+        try:
+            feed.full_clean()
+        except ValidationError as e:
+            logging.warning('Feed has title with large lenght.')
+            for msg in e.messages:
+                logging.warning(msg)
+        else:
+            feed.save()
+            created = True
     return created
 
 
