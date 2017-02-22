@@ -24,3 +24,10 @@ Also you must to run Celery on the separate shell:
 .. code:: bash
 
     $ make celery
+
+Usage
+-----
+
+1. Open admin panel.
+2. Add "Feed source" with any RSS URL you want (for instance: https://feeds.feedburner.com/PythonInsider).
+3. Check this "Feed source" and click on "Parse selected feed sources" action.
