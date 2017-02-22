@@ -32,7 +32,7 @@ class FeedSourceAdmin(admin.ModelAdmin):
 
     def run_rss_parser(self, request, queryset):
         '''
-        Action to parse feed by celery task.
+        Action to parse feed source by celery task.
         '''
         for feed_source in queryset:
             rss_parser.delay(feed_source.url)
